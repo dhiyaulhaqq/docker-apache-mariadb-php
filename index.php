@@ -1,12 +1,11 @@
 <?php
 $user = 'root';
 $pass = 'example';
-try {
-    $dbh = new PDO('mysql:host=localhost;dbname=mysql', $user, $pass);
-    $dbh = null;
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
+$mysqli = new mysqli("localhost", $user, $password);
+if ($mysqli) {
+  echo 'connection success';
 }
-echo 'connection success';
+
+echo 'failed';
+
 ?>
