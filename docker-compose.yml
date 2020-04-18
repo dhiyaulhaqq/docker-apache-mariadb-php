@@ -1,26 +1,23 @@
-version: '2'
+# Use root/example as user/password credentials
+version: '3.1'
 
 services:
-  apache:
-    image: bitnami/apache:latest
-    ports:
-      - 80:8080
-    volumes:
-      - ./apache-vhost/myapp.conf:/vhosts/myapp.conf:ro
-      - .:/app
 
-  mariadb:
-    image: bitnami/mariadb:latest
+  db:
+    image: mariadb
+    restart: always
     environment:
-      - MARIADB_ROOT_PASSWORD=sample
-    volumes:
-      - mariadb_data:/bitnami/mariadb
+      MYSQL_ROOT_PASSWORD: example
 
-  php-fpm:
-    image: bitnami/php-fpm:latest
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  
+  php:
+    image: 'php:7.2-apache'
+    ports:
+      - '6080:80'
     volumes:
-      - .:/app
-
-volumes:
-  mariadb_data:
-    driver: local
+      - './:/var/www/html'
